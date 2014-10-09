@@ -46,12 +46,12 @@ RegexCompilationInfo	  将编译正则表达式需要提供信息
 \d	        匹配数字（0~9）	      ‘\d’匹配8,不匹配12；
 \D	        匹配非数字	          ‘\D’匹配c,不匹配3；
 \w	        匹配任意单字符	      ‘\w\w’ 匹配A3,不匹配@3；
-\W	        匹配非单字符	        ‘\W’匹配@,不匹配c；
-\s	        匹配空白字符	        ‘\d\s\d’匹配3 d,不匹配abc；
-\S	        匹配非空字符	        ‘\S\S\S’匹配A#4,不匹配3 d；
-.	          匹配任意字符	        ‘....’匹配A$ 5,不匹配换行；
+\W	        匹配非单字符	      ‘\W’匹配@,不匹配c；
+\s	        匹配空白字符	      ‘\d\s\d’匹配3 d,不匹配abc；
+\S	        匹配非空字符	      ‘\S\S\S’匹配A#4,不匹配3 d；
+.	        匹配任意字符	      ‘....’匹配A$ 5,不匹配换行；
 […]	        匹配括号中任意字符	  [b-d]匹配b、c、d, 不匹配e；
-[^…]	      匹配非括号字符	      [^b-z]匹配a,不匹配b-z的字符；
+[^…]	    匹配非括号字符	      [^b-z]匹配a,不匹配b-z的字符；
     
     
     
@@ -67,8 +67,8 @@ RegexCompilationInfo	  将编译正则表达式需要提供信息
 
 
 重复语法	      语法解释	          语法例子
-{n}	          匹配n次字符	        \ d{3}匹配\d\d\d,不匹配\d\d或\d\d\d\d
-{n,}	        匹配n次和n次以上	  \w{2}匹配\w\w和\w\w\w以上,不匹配\w
+{n}	            匹配n次字符	        \ d{3}匹配\d\d\d,不匹配\d\d或\d\d\d\d
+{n,}	        匹配n次和n次以上	\w{2}匹配\w\w和\w\w\w以上,不匹配\w
 {n,m}	        匹配n次上m次下	    \s{1,3}匹配\s,\s\s,\s\s\s,不匹配\s\s\s\s
 ?	            匹配0或1次	        5?匹配5或0，不匹配非5和0
 +	            匹配一次或多次	    \S+匹配一个以上\S，不匹配非一个以上\S
@@ -87,12 +87,14 @@ RegexCompilationInfo	  将编译正则表达式需要提供信息
 重复语法	      语法解释	                      语法例子
 ^	            定位后面模式开始位置	 
 $	            前面模式位于字符串末端	 
-\A	          前面模式开始位置	 
-\z	          前面模式结束位置	 
-\Z	          前面模式结束位置(换行前)	 
-\b	          匹配一个单词边界	 
-\B	          匹配一个非单词边界	 
-              转义匹配语法：
+\A	            前面模式开始位置	 
+\z	            前面模式结束位置	 
+\Z	            前面模式结束位置(换行前)	 
+\b	            匹配一个单词边界	 
+\B	            匹配一个非单词边界	 
+              
+              
+转义匹配语法：
 
 
 
@@ -133,13 +135,97 @@ $	            前面模式位于字符串末端
 (1) IsMatch()方法;
 
     IsMatch()方法实际上是一个返回Bool值得方法，如果测试字符满足正则表达式返回True否则返回False；
+    例１；判断是非成都地区电话号码合法；
+
+分析：成都地区电话号码组成028********，前面为固定区号028，后面满足8位数字；
+
+设计正则表达式：028\d{8}（解释：028区号固定，后面为8个数字\d组成）；
+
+/************************************************************************
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
+
+class RegexTest
+{
+    static void Main()
+    {
+        string Regextest = "028\\d{8}";
+        string test1 = "02186666666";
+        string test2 = "02888888888";
+        string test3 = "0281234567";
+        Console.WriteLine("是否程度电话号码：" + Regex.IsMatch(test1, Regextest).ToString());
+        Console.WriteLine("是否程度电话号码：" + Regex.IsMatch(test2, Regextest).ToString());
+        Console.WriteLine("是否程度电话号码：" + Regex.IsMatch(test3, Regextest).ToString());
+        Console.ReadLine();
+    }
+}
+
+*************************************************************************/
+
 (2) Replace()方法；
 
     Replace()方法实际上是一种替换的方法，替换匹配正则表达式匹配模式；
+    例2：在发布带有公开电子邮件地址的文章时，替换@位AT避免产生垃圾邮件；
+
+分析：首先需要判断文章中电子邮箱地址，然后执行替换
+
+设计正则表达式：判断电子邮箱表达式”\w{1,}@w{1,}\\.”;
+
+/************************************************************************
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
+
+class RegexTest
+{
+    static void Main()
+    {
+        string Regextest = "\\w{1,}@\\w{1,}\\.";
+        string Email = "xinyong.w@gmail.com";
+        if (Regex.IsMatch(Email, Regextest) == true)
+        {
+            Console.WriteLine(Regex.Replace(Email, "@", " AT "));
+        }
+        else
+        {
+            Console.WriteLine("没有电子邮箱地址");
+        }
+        
+        Console.ReadLine();
+    }
+}
+
+************************************************************************/
 (3) Split()方法；
 
     Split()方法实际上是拆分的方法，根据匹配正则表达式进行拆分储存在字符串数组中；
 构建表达式基本方法
+例3：从群发邮件地址中读取所有邮件地址；
+
+分析：群发邮件采用“;”作为分割符，需要通过“;”进行拆分
+
+/******************************************************************************
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
+
+class RegexTest
+{
+    static void Main()
+    {
+        string Regextest = ";";
+        string test = "xinyong.w@gmail.com;xxxxx@test.com;ahdadad@qw.com";
+        string[] sig;
+        sig = Regex.Split(test, Regextest);
+        foreach (string str in sig)
+            Console.WriteLine(str.ToString());
+        
+        Console.ReadLine();
+    }
+}
+
+******************************************************************************/
 
     构造Regex对象的构造函数包括两个重载，一个是不含参数的构造、另外一个是含有参数的构造函数；
 
@@ -150,6 +236,40 @@ $	            前面模式位于字符串末端
     补充：RegexOptions属于枚举类型，包括IgnoreCase(忽略大小写)、ReghtToLeft(从右向左)、None（默认）、CultureInvariant(忽略区域)、Multline(多行模式)和SingleLine（单行模式）；
 
 
+
+例4，建立一个合法ISBN验证格式；
+
+分析：ISBN格式为X-XXXXX-XXX-X;
+
+正则表达式格式：\d-\d{5}-\d{3}-\d
+
+构造该正则表达式函数Regex ISBNRegex = new Regex(表达式，参数为空)
+/*******************************************************************************
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
+
+class RegexTest
+{
+    static void Main()
+    {
+        string Regextest = "\\d-\\d{5}-\\d{3}-\\d";
+        Regex ISBNRegex = new Regex(Regextest, RegexOptions.None);
+        Console.WriteLine("输入ISBN号码：");
+        string temp = Console.ReadLine();
+        if (ISBNRegex.IsMatch(temp) == true)
+        {
+            Console.WriteLine("ISBN合法");
+        }
+        else
+            Console.WriteLine("ISBN不合法");
+     
+        
+        Console.ReadLine();
+    }
+}
+
+*******************************************************************************/
 
 
 
