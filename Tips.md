@@ -34,6 +34,7 @@ from __future__ import braces
 
 
 * Chaining Comparison Operators
+
 > *Chaining comparison operators*:
 ```python
 >>> x = 5
@@ -52,6 +53,7 @@ In case you're thinking it's doing `1 < x`, which comes out as True, and then co
 
 
 * Decorators
+
 >  **Decorators** allow to wrap a function or method in another function that can add functionality, modify arguments or results, etc. You write decorators one line above the function definition, beginning with an "at" sign (`@`).  
 Example shows a print_args decorator that prints the decorated function's arguments before calling it:
 ```python
@@ -69,6 +71,7 @@ foo
 ```
 
 * Default Argument Gotchas / Dangers of Mutable Default arguments   
+
 > **Be careful with mutable default arguments**
 ```python
 >>> def foo(x=[]):
@@ -96,6 +99,7 @@ Instead, you should use a sentinel value denoting "not given" and replace with t
 ```
 
 * Descriptors
+
 > **They're the magic behind a whole bunch of core Python features.**  
 >
 When you use dotted access to look up a member (eg, x.y), Python first looks for the member in the instance dictionary. If it's not found, it looks for it in the class dictionary. If it finds it in the class dictionary, and the object implements the descriptor protocol, instead of just returning it, Python executes it. A descriptor is any class that implements the `__get__`,`__set__`, or`__delete__`methods.  
@@ -125,6 +129,7 @@ Raymond Hettinger has an [excellent tutorial](http://users.rcn.com/python/downlo
 
 
 * Dictionary default `.get` value
+
 > **Dictionaries have a `get()` method**
 Dictionaries have a 'get()' method. If you do `d['key']` and key isn't there, you get an exception. If you do `d.get('key')`, you get back None if 'key' isn't there. You can add a second argument to get that item back instead of None, eg: `d.get('key', 0)`.  
 >
@@ -134,6 +139,7 @@ sum[value] = sum.get(value, 0) + 1
 ```
 
 * Docstring Tests
+
 > Doctest: documentation and unit-testing at the same time.  
 >
 Example extracted from the Python documentation:  
@@ -172,6 +178,7 @@ if __name__ == "__main__":
 ***Rep1***:Doctests are overrated and pollute the documentation. How often do you test a standalone function without any setUp() ? 
 
 * Ellipsis Slicing Syntax   
+
 > Python's advanced slicing operation has a barely known syntax element, the ellipsis:
 ```python
 >>> class C(object):
@@ -184,6 +191,7 @@ if __name__ == "__main__":
 Unfortunately it's barely useful as the ellipsis is only supported if tuples are involved.
 
 * Enumeration
+
 > Wrap an iterable with enumerate and it will yield the item along with its index.  
 For example:
 ```python
@@ -209,6 +217,7 @@ For example:
 
 
 * For/else
+
 > he for...else syntax (see http://docs.python.org/ref/for.html )
 ```python
 for i in foo:
@@ -234,6 +243,7 @@ I think the for/else syntax is awkward. It "feels" as if the else clause should 
 
 
 * Function as `iter()` argument   
+
 > `iter()` can take a callable argument  
 For instance:
 ```python
@@ -246,6 +256,7 @@ The `iter(callable, until_value)` function repeatedly calls callable and yields 
 ***Rep***You should also add the explanation: iter(callable, sentinel) -> iterator; the callable is called until it returns the sentinel
 
 * Generator expressions
+
 > Creating generators objects  
 If you write
 ```python
@@ -275,6 +286,7 @@ You can append many if statements to the end of the generator, basically replica
 
 
 * import this
+
 > Main messages :)
 ```python
 import this
@@ -283,6 +295,7 @@ import this
 ***Rep:***I've updated my `/usr/lib/python2.6/this.py` replacing the old code with this print `s.translate("".join(chr(64<i<91 and 65+(i-52)%26 or 96<i<123 and 97+(i-84)%26 or i) for i in range(256)))` and it looks much better now!! :-D
 
 * In Place Value Swapping   
+
 > 
 ```python
 >>> a = 10
@@ -304,6 +317,7 @@ Note that multiple assignment is really just a combination of tuple packing and 
 ***Rep:***It doesn't use more memory. It uses less.. I just wrote it both ways, and de-compiled the bytecode.. the compiler optimizes, as you'd hope it would. dis results showed it's setting up the vars, and then ROT_TWOing. ROT_TWO means 'swap the two top-most stack vars'... Pretty snazzy, actually.
 
 * List stepping
+
 > The step argument in slice operators. For example:
 ```python
 a = [1,2,3,4,5]
@@ -320,6 +334,7 @@ The special case x[::-1] is a useful idiom for 'x reversed'.
 ***Rep2:***The problem with reversed() is that it returns an iterator, so if you want to preserve the type of the reversed sequence (tuple, string, list, unicode, user types...), you need an additional step to convert it back.
 
 * \_\_missing\_\_ items
+
 > From 2.5 onwards dicts have a special method `__missing__` that is invoked for missing items:
 ```python
 >>> class MyDict(dict):
@@ -346,6 +361,7 @@ I recommend converting such dicts to regular dicts before passing them to functi
 would add a new item to the dict.
 
 * Multi-line Regex
+
 > Readable regular expressions  
 >
 In Python you can split a regular expression over multiple lines, name your matches and insert comments.
@@ -391,6 +407,7 @@ You can also verbosely write a regex without using re.VERBOSE thanks to string l
 
 
 * Named string formatting
+
 > % -formatting takes a dictionary (also applies `%i/%s` etc. validation).
 ```python
 >>> print "The %(foo)s is %(bar)i." % {'foo': 'answer', 'bar':42}
@@ -407,8 +424,8 @@ And since `locals()` is also a dictionary, you can simply pass that as a dict an
 ```
 
 * Nested list/generator comprehensions
-   
->Nested list comprehensions and generator expressions:
+
+> Nested list comprehensions and generator expressions:
 ```python
 [(i,j) for i in range(3) for j in range(i) ]    
 ((i,j) for i in range(4) for j in range(i) )
@@ -416,6 +433,7 @@ And since `locals()` is also a dictionary, you can simply pass that as a dict an
 These can replace huge chunks of nested-loop code.
 
 * New types at runtime
+
 > Creating new types in a fully dynamic manner
 ```python
 >>> NewType = type("NewType", (object,), {"x": "hello"})
@@ -437,12 +455,14 @@ Probably not the most useful thing, but nice to know.
 
 
 * .pth files
->To add more python modules (espcially 3rd party ones), most people seem to use PYTHONPATH environment variables or they add symlinks or directories in their site-packages directories. Another way, is to use `*.pth` files. Here's the official python doc's explanation:
+
+> To add more python modules (espcially 3rd party ones), most people seem to use PYTHONPATH environment variables or they add symlinks or directories in their site-packages directories. Another way, is to use `*.pth` files. Here's the official python doc's explanation:
 >
 "The most convenient way `[to modify python's search path]` is to add a path configuration file to a directory that's already on Python's path, usually to the `.../site-packages/` directory. Path configuration files have an extension of .pth, and each line must contain a single path that will be appended to sys.path. (Because the new paths are appended to sys.path, modules in the added directories will not override standard modules. This means you can't use this mechanism for installing fixed versions of standard modules.)"
 
 
 * ROT13 Encoding    
+
 > ROT13 is a valid encoding for source code, when you use the right coding declaration at the top of the code file:
 ```python
 #!/usr/bin/env python
@@ -452,6 +472,7 @@ cevag "Uryyb fgnpxbiresybj!".rapbqr("rot13")
 That has nothing to do with the encoding, it is just Python written in Welsh. :-P
 
 * Regex Debugging
+
 > Get the python regex parse tree to debug your regex.  
 >
 Regular expressions are a great feature of python, but debugging them can be a pain, and it's all too easy to get a regex wrong.
@@ -503,6 +524,7 @@ Of course you can combine it with whatever flags you want, like commented regexe
 ```
 
 * Sending to Generators
+
 > Sending values into generator functions. For example having this function:
 ```python
 def mygen():
@@ -527,7 +549,8 @@ You can:
 
 
 * Tab Completion in Interactive Interpreter
->
+
+> 
 ```python
 try:
     import readline
@@ -550,6 +573,7 @@ You will also have to set a `PYTHONSTARTUP` environment variable.
 ***Rep:***IPython gives you this plus tons of other neat stuff 
 
 * Ternary Expression    
+
 > Conditional Assignment
 ```python
 x = 3 if (y == 1) else 2
@@ -573,6 +597,7 @@ where class1 and class2 are two classes.
 ***Rep:***The assignment is not the special part. You could just as easily do something like: `return 3 if (y == 1) else 2`.
 
 * try/except/else
+
 > Exception else clause:
 ```python
 try:
@@ -592,6 +617,7 @@ See http://docs.python.org/tut/node10.html
 
 
 * with statement
+
 > Context managers and the "with" Statement
 >
 Introduced in PEP 343, a context manager is an object that acts as a run-time context for a suite of statements.
