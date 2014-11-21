@@ -570,7 +570,7 @@ class_instance.__doc__     class_instance.function
 >>> class_instance.f<TAB>unction()
 ```
 You will also have to set a `PYTHONSTARTUP` environment variable.  
-***Rep:***IPython gives you this plus tons of other neat stuff 
+> ***Rep:***IPython gives you this plus tons of other neat stuff 
 
 * Ternary Expression    
 
