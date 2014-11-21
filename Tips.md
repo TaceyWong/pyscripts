@@ -11,6 +11,7 @@
 
 
 * ***Argument Unpacking***
+
 > *Function argument unpacking*
 You can unpack a list or a dictionary as function arguments using * and **.  
 For example:
@@ -25,7 +26,8 @@ draw_point(**point_bar)
 Very useful shortcut since lists, tuples and dicts are widely used as containers.
 
 * Braces
->If you don't like using whitespace to denote scopes, you can use the C-style {} by issuing:
+
+> If you don't like using whitespace to denote scopes, you can use the C-style {} by issuing:
 ```python
 from __future__ import braces
 ```
