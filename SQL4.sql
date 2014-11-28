@@ -202,3 +202,8 @@ where sno not in
 		where cno = '1'
 	);
 13、
+SELECT *  FROM  Student
+WHERE  sdept!='cs' AND  sage>
+   (SELECT MAX(sage)  FROM  student
+    WHERE  sdept='cs' AND ssex = '女'  )
+    ;
