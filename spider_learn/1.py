@@ -27,3 +27,36 @@ response = urllib2.urlopen(request)
 
 print response.read().decode("utf-8")
 
+url = ""
+useragent =""
+values = {}
+headers = {"useragent":useragent}
+data = urllib.urlencode(values)
+request = urllib2.Request(url,data,headers)
+response = urllib2.urlopen(request)
+
+
+enable_proxy = True
+proxy_handler = urllib2.ProxyHandler({"http":"http://"})
+null_proxy_handler = urllib2.ProxyHandler({})
+if enable_proxy:
+    opner = urllib2.build_opener(proxy_handler)
+else:
+    opner = urllib2.build_opener(null_proxy_handler)
+
+urllib2.install_opener(opener)
+
+
+request = urllib2.Request(url,data=None)
+request.get_method = lambda : 'PUT' #DELETE 或者更底层的httplib
+
+
+httpHandler = 
+
+
+
+
+
+
+
+
